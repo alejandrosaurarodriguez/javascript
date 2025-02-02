@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gato cabrón</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function() {
+    const $cat = $('#cat');
+    const $gameArea = $('#game-area');
+    const $result = $('#result');
+    let hoverTimeout;
+    let gameStopped = false;
+
+    function moveCat() {
+        if (gameStopped) return; // Detener el movimiento si el juego ha terminado
+
+        const gameAreaWidth = $gameArea.width();
+        const gameAreaHeight = $gameArea.height();
+
+        // Generar nuevas coordenadas aleatorias
+        const newLeft = Math.random() * (gameAreaWidth - $cat.width());
+        const newTop = Math.random() * (gameAreaHeight - $cat.height());
+
+        // Mover al gato
+        $cat.css({
+            left: newLeft + 'px',
+            top: newTop + 'px'
+        });
+    }
+
+    // Evento de clic en el gato
+    $cat.on('click', function(event) {
+        event.stopPropagation(); // Evitar que el clic afecte al div contenedor
+        if (!gameStopped) {
+            clearTimeout(hoverTimeout); // Cancelar cualquier temporizador activo
+            gameStopped = true; // Detener el juego
+            $result.text('¡Me atrapaste! El gato se rinde y ya no huirá más.');
+            $cat.off('mouseenter mouseleave'); // Desactivar el hover
+        }
+    });
+
+    // Evento de hover sobre el gato
+    $cat.on('mouseenter', function() {
+        if (gameStopped) return; // No hacer nada si el juego ha terminado
+
+        hoverTimeout = setTimeout(function() {
+            $result.text('¡El gato escapó porque te quedaste mirándolo demasiado!');
+            moveCat();
+        }, 500); // Esperar 1 segundo antes de que escape
+    });
+
+    $cat.on('mouseleave', function() {
+        if (gameStopped) return; // No hacer nada si el juego ha terminado
+
+        clearTimeout(hoverTimeout); // Cancelar el escape si el ratón se mueve fuera del gato
+    });
+
+    // Evento para mover al gato cada vez que alguien haga clic en el área de juego
+    $gameArea.on('click', function() {
+        if (gameStopped) return; // No hacer nada si el juego ha terminado
+
+        $result.text('¡Fallaste! El gato se escapó...');
+        moveCat();
+    });
+
+    // Mover al gato inicialmente
+    moveCat();
+});
+
+  </script>
+</head>
+<body>
+  <div id="game-area" style="position: relative; width: 600px; height: 600px; border: 2px solid black;">
+    <div id="cat" style="position: absolute; width: 20px; height: 20px; background-color: white; border-radius: 50%; cursor: pointer;">
+        🐱
+    </div>
+</div>
+<p id="result"></p>
+
+</body>
+</html>

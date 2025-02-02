@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // Clase principal para representar un Alumno
+        class Alumno {
+            constructor(id, nombre, edad, curso) {
+                this.id = id; // Identificador único del alumno
+                this.nombre = nombre; // Nombre del alumno
+                this.edad = edad; // Edad del alumno
+                this.curso = curso; // Curso en el que está inscrito
+            }
+
+            // Método para mostrar la información del alumno
+            mostrarInfo() {
+                return `ID: ${this.id} | Nombre: ${this.nombre} | Edad: ${this.edad} | Curso: ${this.curso}`;
+            }
+            }
+
+            // Clase para gestionar el registro de alumnos
+            class GestorDeAlumnos {
+            constructor() {
+                this.alumnos = []; // Lista de alumnos registrados
+                this.siguienteId = 1; // Generar IDs automáticamente
+            }
+
+            // Método para agregar un nuevo alumno
+            agregarAlumno(nombre, edad, curso) {
+                const nuevoAlumno = new Alumno(this.siguienteId++, nombre, edad, curso);
+                this.alumnos.push(nuevoAlumno);
+                console.log(`Alumno agregado con éxito: ${nuevoAlumno.nombre}`);
+            }
+
+            // Método para mostrar todos los alumnos
+            mostrarAlumnos() {
+                if (this.alumnos.length === 0) {
+                console.log("No hay alumnos registrados.");
+                return;
+                }
+
+                console.log("Lista de alumnos registrados:");
+                this.alumnos.forEach((alumno) => {
+                console.log(alumno.mostrarInfo());
+                });
+            }
+
+            // Método para buscar un alumno por su ID
+            buscarAlumnoPorId(id) {
+                const alumno = this.alumnos.find((alumno) => alumno.id === id);
+                if (alumno) {
+                console.log("Alumno encontrado:");
+                console.log(alumno.mostrarInfo());
+                } else {
+                console.log(`No se encontró ningún alumno con ID: ${id}`);
+                }
+            }
+
+            // Método para eliminar un alumno por su ID
+            eliminarAlumno(id) {
+                const indice = this.alumnos.findIndex((alumno) => alumno.id === id);
+                if (indice !== -1) {
+                const eliminado = this.alumnos.splice(indice, 1);
+                console.log(`Alumno eliminado: ${eliminado[0].nombre}`);
+                } else {
+                console.log(`No se encontró ningún alumno con ID: ${id}`);
+                }
+            }
+            }
+
+            // Ejemplo de uso del sistema
+            const gestor = new GestorDeAlumnos();
+
+            // Agregar alumnos
+            gestor.agregarAlumno("Juan Pérez", 20, "Matemáticas");
+            gestor.agregarAlumno("Ana López", 22, "Física");
+            gestor.agregarAlumno("Carlos García", 19, "Química");
+
+            // Mostrar todos los alumnos
+            gestor.mostrarAlumnos();
+
+            // Buscar un alumno por ID
+            gestor.buscarAlumnoPorId(2);
+
+            // Eliminar un alumno por ID
+            gestor.eliminarAlumno(1);
+
+            // Mostrar todos los alumnos después de eliminar uno
+            gestor.mostrarAlumnos();
+
+            gestor.agregarAlumno("Alejandro Saura", 18, "Programación");
+
+            gestor.mostrarAlumnos();
+
+    </script>
+</body>
+</html>

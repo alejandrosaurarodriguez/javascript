@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Clase principal para representar un Alumno
+        class Alumno {
+        constructor(id, nombre, edad) {
+            this.id = id;
+            this.nombre = nombre;
+            this.edad = edad;
+            this.cursos = []; // Cursos inscritos por el alumno
+        }
+
+        // Inscribir al alumno en un curso
+        inscribirEnCurso(curso) {
+            if (!this.cursos.includes(curso)) {
+            this.cursos.push(curso);
+            console.log(`${this.nombre} se inscribió en el curso: ${curso.nombre}`);
+            } else {
+            console.log(`${this.nombre} ya está inscrito en el curso: ${curso.nombre}`);
+            }
+        }
+
+        // Mostrar información del alumno
+        mostrarInfo() {
+            const cursos = this.cursos.map((curso) => curso.nombre).join(", ") || "Ninguno";
+            return `ID: ${this.id} | Nombre: ${this.nombre} | Edad: ${this.edad} | Cursos: ${cursos}`;
+        }
+        }
+
+        // Clase para representar un Profesor
+        class Profesor {
+        constructor(id, nombre, especialidad) {
+            this.id = id;
+            this.nombre = nombre;
+            this.especialidad = especialidad;
+            this.cursos = []; // Cursos asignados al profesor
+        }
+
+        // Asignar un curso al profesor
+        asignarCurso(curso) {
+            if (!this.cursos.includes(curso)) {
+            this.cursos.push(curso);
+            curso.asignarProfesor(this);
+            console.log(`${this.nombre} fue asignado al curso: ${curso.nombre}`);
+            } else {
+            console.log(`${this.nombre} ya está asignado al curso: ${curso.nombre}`);
+            }
+        }
+
+        // Mostrar información del profesor
+        mostrarInfo() {
+            const cursos = this.cursos.map((curso) => curso.nombre).join(", ") || "Ninguno";
+            return `ID: ${this.id} | Nombre: ${this.nombre} | Especialidad: ${this.especialidad} | Cursos: ${cursos}`;
+        }
+        }
+
+        // Clase para representar un Curso
+        class Curso {
+        constructor(id, nombre) {
+            this.id = id;
+            this.nombre = nombre;
+            this.profesor = null; // Profesor asignado al curso
+            this.alumnos = []; // Alumnos inscritos en el curso
+        }
+
+        // Asignar un profesor al curso
+        asignarProfesor(profesor) {
+            if (this.profesor === null) {
+            this.profesor = profesor;
+            } else {
+            console.log(`El curso ${this.nombre} ya tiene un profesor asignado: ${this.profesor.nombre}`);
+            }
+        }
+
+        // Inscribir un alumno al curso
+        inscribirAlumno(alumno) {
+            if (!this.alumnos.includes(alumno)) {
+            this.alumnos.push(alumno);
+            alumno.inscribirEnCurso(this);
+            } else {
+            console.log(`${alumno.nombre} ya está inscrito en el curso: ${this.nombre}`);
+            }
+        }
+
+        // Mostrar información del curso
+        mostrarInfo() {
+            const alumnos = this.alumnos.map((alumno) => alumno.nombre).join(", ") || "Ninguno";
+            const profesor = this.profesor ? this.profesor.nombre : "Sin asignar";
+            return `ID: ${this.id} | Nombre: ${this.nombre} | Profesor: ${profesor} | Alumnos: ${alumnos}`;
+        }
+        }
+
+        // Ejemplo de uso
+        const alumno1 = new Alumno(1, "Juan Pérez", 20);
+        const alumno2 = new Alumno(2, "Ana López", 22);
+        const profesor1 = new Profesor(1, "Carlos García", "Matemáticas");
+        const profesor2 = new Profesor(2, "María Torres", "Física");
+
+        const curso1 = new Curso(1, "Álgebra");
+        const curso2 = new Curso(2, "Física Cuántica");
+
+        // Asignar profesores a cursos
+        profesor1.asignarCurso(curso1);
+        profesor2.asignarCurso(curso2);
+
+        // Inscribir alumnos a cursos
+        curso1.inscribirAlumno(alumno1);
+        curso1.inscribirAlumno(alumno2);
+        curso2.inscribirAlumno(alumno2);
+
+        // Mostrar información
+        console.log(alumno1.mostrarInfo());
+        console.log(alumno2.mostrarInfo());
+        console.log(profesor1.mostrarInfo());
+        console.log(curso1.mostrarInfo());
+        console.log(curso2.mostrarInfo());
+
+    </script>
+</body>
+</html>

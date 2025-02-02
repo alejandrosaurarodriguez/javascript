@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    overflow: hidden;
+  }
+  
+  #movable-square {
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    position: absolute;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  

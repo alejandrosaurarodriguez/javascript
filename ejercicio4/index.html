@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM Simple</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/index.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>CRM Simple</h1>
+
+    <div class="section" id="clientes">
+      <h2>Clientes</h2>
+      <ul id="listaClientes"></ul>
+      <input type="text" id="nombreCliente" placeholder="Nombre">
+      <input type="email" id="emailCliente" placeholder="Email">
+      <input type="text" id="telefonoCliente" placeholder="Teléfono">
+      <button onclick="agregarCliente()">Agregar Cliente</button>
+    </div>
+
+    <div class="section" id="productos">
+      <h2>Productos</h2>
+      <ul id="listaProductos"></ul>
+      <input type="text" id="nombreProducto" placeholder="Nombre del Producto">
+      <input type="number" id="precioProducto" placeholder="Precio">
+      <button onclick="agregarProducto()">Agregar Producto</button>
+    </div>
+
+    <div class="section" id="ordenes">
+      <h2>Órdenes</h2>
+      <ul id="listaOrdenes"></ul>
+      <input type="number" id="idClienteOrden" placeholder="ID del Cliente">
+      <button onclick="crearOrden()">Crear Orden</button>
+
+      <h3>Agregar Producto a Orden</h3>
+      <input type="number" id="idOrden" placeholder="ID de la Orden">
+      <input type="number" id="idProductoOrden" placeholder="ID del Producto">
+      <button onclick="agregarProductoAOrden()">Agregar Producto</button>
+    </div>
+  </div>
+</body>
+</html>
